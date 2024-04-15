@@ -33,6 +33,7 @@ function one_degree_near_global_simulation(architecture = GPU();
     surface_boundary_conditions_path             = datadep"near_global_one_degree/surface_boundary_conditions_12_months_360_150.jld2",
     biogeochemistry = NoBiogeochemistry,
     biogeochemistry_kwargs = (),
+    forcings = NamedTuple(),
     progress_callback = false,
     )
 
@@ -194,7 +195,8 @@ function one_degree_near_global_simulation(architecture = GPU();
 
     @info "Building a model..."; start=time_ns()
 
-    model = HydrostaticFreeSurfaceModel(; grid, free_surface, buoyancy, coriolis, tracers,
+    model = HydrostaticFreeSurfaceModel(; grid, free_surface, buoyancy, coriolis, tracers, 
+                                        forcing = forcings,
                                         momentum_advection = VectorInvariant(), 
                                         tracer_advection = WENO(underlying_grid),
                                         closure = closures,
