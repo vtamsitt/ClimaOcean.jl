@@ -34,6 +34,7 @@ function one_degree_near_global_simulation(architecture = GPU();
     biogeochemistry = NoBiogeochemistry,
     biogeochemistry_kwargs = (),
     forcings = NamedTuple(),
+    bgc_boundary_conditions = NamedTuple(),
     progress_callback = false,
     )
 
@@ -193,6 +194,7 @@ function one_degree_near_global_simulation(architecture = GPU();
     coriolis = HydrostaticSphericalCoriolis()
     free_surface = ImplicitFreeSurface()
 
+
     @info "Building a model..."; start=time_ns()
 
     model = HydrostaticFreeSurfaceModel(; grid, free_surface, buoyancy, coriolis, tracers, 
@@ -200,7 +202,7 @@ function one_degree_near_global_simulation(architecture = GPU();
                                         momentum_advection = VectorInvariant(), 
                                         tracer_advection = WENO(underlying_grid),
                                         closure = closures,
-                                        boundary_conditions = (u=u_bcs, v=v_bcs, T=T_bcs, S=S_bcs),
+                                        boundary_conditions = (u=u_bcs, v=v_bcs, T=T_bcs, S=S_bcs, bgc_boundary_conditions),
                                         biogeochemistry = biogeochemistry(; grid, biogeochemistry_kwargs...))
 
     @info "... built $model."
