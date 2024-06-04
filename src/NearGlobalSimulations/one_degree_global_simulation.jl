@@ -197,7 +197,7 @@ function one_degree_near_global_simulation(architecture = GPU();
     state_bcs = (u = u_bcs, v = v_bcs, T = T_bcs, S = S_bcs)
     combined_bcs = merge(state_bcs, bgc_boundary_conditions)
 
-    @info "check bcs" * combined_bcs
+    @show combined_bcs
     @info "Building a model..."; start=time_ns()
     
     model = HydrostaticFreeSurfaceModel(; grid, free_surface, buoyancy, coriolis, tracers, 
