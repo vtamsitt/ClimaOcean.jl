@@ -195,7 +195,7 @@ function one_degree_near_global_simulation(architecture = GPU();
     free_surface = ImplicitFreeSurface()
 
     state_bcs = (u = u_bcs, v = v_bcs, T = T_bcs, S = S_bcs)
-    combined_bcs = merge(state_bcs, bgc_boundary_conditions)
+    combined_bcs = (;state_bcs..., bgc_boundary_conditions...)
 
     @show combined_bcs
     @info "Building a model..."; start=time_ns()
